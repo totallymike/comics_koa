@@ -1,0 +1,22 @@
+<div class="page-header">
+  <h1>{{ title }}</h1>
+  <p>Welcome to {{ title }} </p>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h4>Issues</h4>
+    </div>
+    <div class="col-md-4">
+      <a href="/issues/new">Add Issues</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <ul>
+        {{#each issues}}
+          <li>{{ filename }}</li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</div>
