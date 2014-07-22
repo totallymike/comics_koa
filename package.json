@@ -9,6 +9,7 @@
   "author": "Michael Westbom",
   "license": "MIT",
   "dependencies": {
+    "debug": "^1.0.4",
     "koala": "^0.6.0"
   }
 }
