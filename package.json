@@ -1,0 +1,14 @@
+{
+  "name": "comics_koa",
+  "version": "0.0.0",
+  "description": "A web-based comic reader",
+  "main": "bin/www.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Westbom",
+  "license": "MIT",
+  "dependencies": {
+    "koala": "^0.6.0"
+  }
+}
