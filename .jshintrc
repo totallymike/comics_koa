@@ -1,0 +1,14 @@
+{
+  "asi": true,
+  "camelcase": true,
+  "curly": true,
+  "esnext": true,
+  "indent": 2,
+  "laxcomma": true,
+  "maxdepth": 2,
+  "node": true,
+  "plusplus": true,
+  "quotmark": "single",
+  "undef": true,
+  "unused": true
+}
