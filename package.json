@@ -9,6 +9,7 @@
   "author": "Michael Westbom",
   "license": "MIT",
   "dependencies": {
+    "bull": "^0.1.6",
     "debug": "^1.0.4",
     "dotenv": "^0.4.0",
     "koa": "^0.8.1",
