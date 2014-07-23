@@ -20,9 +20,6 @@ if (app.env === 'development') {
 
 app.keys = [process.env.SESSION_SECRET]
 app.use(router(app))
-
-console.log(app.keys)
-
-app.get('/', function *(next) {
-  yield this.render('index', {issues: []})
-})
+require('./config/db')
+require('./app/controllers')
+require('./config/routes')(app)

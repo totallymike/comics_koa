@@ -14,7 +14,11 @@
     "koa": "^0.8.1",
     "koa-common": "^1.2.0",
     "koa-hbs": "^0.4.6",
-    "koa-router": "^3.2.1"
+    "koa-resource-router": "^0.3.3",
+    "koa-router": "^3.2.1",
+    "lodash": "^2.4.1",
+    "sails-postgresql": "^0.10.0-rc4",
+    "waterline": "^0.10.0-rc15"
   },
   "devDependencies": {
     "bootstrap": "^3.2.0",
