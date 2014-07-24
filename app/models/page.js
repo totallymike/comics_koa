@@ -1,6 +1,6 @@
 var Waterline = require('waterline')
 
-module.exports = Waterline.Collection.extend({
+var Page = Waterline.Collection.extend({
   identity: 'page',
   connection: 'postgresql',
 
@@ -12,3 +12,5 @@ module.exports = Waterline.Collection.extend({
     }
   }
 })
+
+module.exports = Page
