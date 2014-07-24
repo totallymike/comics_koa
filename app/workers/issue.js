@@ -1,4 +1,5 @@
 var Queue = require('bull')
+  , log = require('debug')('comics:worker')
 
 
 var queueHost = process.env.QUEUE_HOST
@@ -8,12 +9,15 @@ var issueQueue
 module.exports = issueQueue = Queue('issue extracting', queuePort, queueHost)
 
 issueQueue.process(function (job, done) {
-  console.log(job)
-  var Issue = require('../../config/db').models.issue
+  var IssueProcessor = require('../services/issue_processor')
   var data = job.data
-  Issue.processArchive(data.file, done)
+  IssueProcessor(data.file, done)
 })
 
 issueQueue.on('failed', function (job, err) {
-  console.log(err)
+  log('ERROR %s', err)
+})
+
+issueQueue.on('completed', function () {
+  log('Completed job')
 })
