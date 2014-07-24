@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "bull": "^0.1.6",
+    "co": "^3.0.6",
     "debug": "^1.0.4",
     "decompress-zip": "0.0.8",
     "dotenv": "^0.4.0",
@@ -21,6 +22,7 @@
     "koa-router": "^3.2.1",
     "lodash": "^2.4.1",
     "sails-postgresql": "^0.10.0-rc4",
+    "unglob": "^0.1.2",
     "waterline": "^0.10.0-rc15"
   },
   "devDependencies": {

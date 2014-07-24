@@ -3,7 +3,7 @@ var db = require('../../config/db')
   , debug = require('debug')('comics:issue-processor')
   , co = require('co')
   , _ = require('lodash')
-  , fs = require('co-fs-plus')
+  , unglob = require('unglob')
 
 function IssueProcessor(file, done) {
   'use strict';
@@ -27,12 +27,11 @@ function IssueProcessor(file, done) {
       co(function* () {
         var issue = yield coCreate(Issue, {filename: file.name})
 
-        var files = yield fs.walk(issuePath, {
-          filterFilename: function (name) {
-            return name.match(/(png|jpg|jpeg|gif)$/i)
-          }
-        })
-
+        var files = yield unglob.directory(
+          ['**/*.png', '**/*.jpg'],
+          issuePath
+        )
+        debug('FILES: %s', files)
         var pageCreators = _.map(files, function (file, pageNumber) {
           return coCreate(Page, {
             filename: file,
@@ -46,10 +45,7 @@ function IssueProcessor(file, done) {
     })
 
     unzipper.extract({
-      path: issuePath,
-      filter: function (file) {
-        return !Boolean(file.filename.match(/(png|jpg|jpeg|gif)$/i))
-      }
+      path: issuePath
     })
   }
 }

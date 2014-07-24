@@ -7,6 +7,5 @@ var scriptFilter = function (name) {
 
 fs.readdirSync(path.join('.', 'gulp', 'tasks')).filter(scriptFilter).forEach(function (task) {
   var taskName = path.basename(task, path.extname(task))
-  console.log(taskName)
   require('./tasks/' + taskName)
 })
