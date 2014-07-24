@@ -6,6 +6,7 @@ module.exports = Waterline.Collection.extend({
 
   attributes: {
     filename: 'string',
+    pageNumber: 'integer',
     issue: {
       model: 'issue'
     }
