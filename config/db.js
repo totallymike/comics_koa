@@ -1,7 +1,6 @@
 var Waterline = require('waterline')
   , postgresql = require('sails-postgresql')
   , _ = require('lodash')
-  , co = require('co')
 
 var orm = new Waterline()
   , models = require('../app/models')

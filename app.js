@@ -26,6 +26,7 @@ app.use(router(app))
 co(function *() {
   var orm = require('./config/db')
   var ontology = yield orm.initDb()
+  debug('DB initialized')
   app.context.models = ontology.collections
 })()
 
