@@ -27,11 +27,6 @@ co(function *() {
   var orm = require('./config/db')
   var ontology = yield orm.initDb()
   app.context.models = ontology.collections
-  app.context.coFind = function(model, options) {
-    return function (callback) {
-      model.find(options).exec(callback)
-    }
-  }
 })()
 
 require('./app/controllers')
