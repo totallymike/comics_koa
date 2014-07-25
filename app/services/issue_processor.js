@@ -1,6 +1,4 @@
-var db = require('../../config/db')
-  , Issue = db.models.issue
-  , debug = require('debug')('comics:issue-processor')
+var debug = require('debug')('comics:issue-processor')
   , co = require('co')
   , _ = require('lodash')
   , unglob = require('unglob')
@@ -8,6 +6,8 @@ var db = require('../../config/db')
 function IssueProcessor(file, done) {
   'use strict';
   var path = require('path')
+    , db = require('../../config/db')
+    , Issue = db.models.issue
     , Page = db.models.page
 
   var issuePath = path.join(process.env.DATA_DIR, file.name)
@@ -28,10 +28,10 @@ function IssueProcessor(file, done) {
         var issue = yield coCreate(Issue, {filename: file.name})
 
         var files = yield unglob.directory(
-          ['**/*.png', '**/*.jpg'],
+          ['**/*.png', '**/*.jpg', '**/*.jpeg'],
           issuePath
-        )
-        debug('FILES: %s', files)
+        ).sort()
+
         var pageCreators = _.map(files, function (file, pageNumber) {
           return coCreate(Page, {
             filename: file,

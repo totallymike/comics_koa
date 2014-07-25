@@ -8,7 +8,7 @@ module.exports = new Resource('issues', {
   },
   create: [
     koaBody({
-      multipart: true,
+      multipart: true
     }),
     function *(next) {
       issueQueue.add({file: this.request.body.files.filename})

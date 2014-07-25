@@ -2,6 +2,8 @@ var koa = require('koa')
   , router = require('koa-router')
   , hbs = require('koa-hbs')
   , path = require('path')
+  , debug = require('debug')('comics:app')
+  , co = require('co')
 
 var app = koa()
 module.exports = app
@@ -20,6 +22,17 @@ if (app.env === 'development') {
 
 app.keys = [process.env.SESSION_SECRET]
 app.use(router(app))
-require('./config/db')
+
+co(function *() {
+  var orm = require('./config/db')
+  var ontology = yield orm.initDb()
+  app.context.models = ontology.collections
+  app.context.coFind = function(model, options) {
+    return function (callback) {
+      model.find(options).exec(callback)
+    }
+  }
+})()
+
 require('./app/controllers')
 require('./config/routes')(app)

@@ -1,6 +1,7 @@
 var Waterline = require('waterline')
   , postgresql = require('sails-postgresql')
   , _ = require('lodash')
+  , co = require('co')
 
 var orm = new Waterline()
   , models = require('../app/models')
@@ -21,11 +22,17 @@ _.forOwn(models, function (num, model) {
   orm.loadCollection(models[model])
 })
 
-orm.initialize(config, function(err, models) {
-  if (err) {
-    throw err
+var initDb = function () {
+  return function(callback) {
+    orm.initialize(config, function (err, ontology) {
+      if (err) {
+        throw err
+      }
+      orm.models = ontology.collections
+      callback(null, ontology)
+    })
   }
+}
 
-  module.exports.models = models.collections
-  module.exports.connections = models.connections
-})
+module.exports = orm
+module.exports.initDb = initDb
