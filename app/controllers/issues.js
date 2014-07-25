@@ -1,6 +1,8 @@
 var Resource = require('koa-resource-router')
   , koaBody = require('koa-better-body')
   , issueQueue = require('../workers/issue')
+  , debug = require('debug')('comics:app')
+  , co = require('co')
 
 module.exports = new Resource('issues', {
   new: function *() {
@@ -15,5 +17,13 @@ module.exports = new Resource('issues', {
       this.redirect('/')
       yield next
     }
-  ]
+  ],
+  show: function *(next) {
+    var self = this
+    var Issue = this.models.issue
+    var issue = yield Issue.findOne()
+                           .where({id: this.params.issue})
+                           .populate('pages', {sort: 'pageNumber ASC'})
+    yield this.render('issues/show', {issue: issue})
+  }
 })
