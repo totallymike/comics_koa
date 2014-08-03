@@ -1,6 +1,10 @@
-var controllers = require('../app/controllers')
+var root = require('../app/controllers/root')
+  , issues = require('../app/controllers/issues')
+  , pages = require('../app/controllers/pages')
+
+issues.add(pages)
 
 module.exports = function (app) {
-  app.use(controllers.root.middleware())
-  app.use(controllers.issues.middleware())
+  app.use(root.middleware())
+  app.use(pages.middleware())
 }
