@@ -30,15 +30,16 @@ function IssueProcessor(file, done) {
         var files = yield unglob.directory(
           ['**/*.png', '**/*.jpg', '**/*.jpeg'],
           issuePath
-        ).sort()
+        )
 
-        var pageCreators = _.map(files, function (file, pageNumber) {
+        var pageCreators = _.map(files.sort(), function (file, pageNumber) {
           return coCreate(Page, {
             filename: file,
             pageNumber: pageNumber,
             issue: issue.id
           })
         })
+
         var pages = yield pageCreators
         return [null, [issue, pages]]
       })(done)
