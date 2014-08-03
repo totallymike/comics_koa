@@ -22,7 +22,7 @@ if (app.env === 'development') {
 
 app.keys = [process.env.SESSION_SECRET]
 app.use(router(app))
-debug('wat wat wat')
+
 co(function *() {
   var orm = require('./config/db')
   var ontology = yield orm.initDb()
