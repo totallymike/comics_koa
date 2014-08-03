@@ -2,7 +2,7 @@ var Resource = require('koa-resource-router')
   , koaBody = require('koa-better-body')
   , issueQueue = require('../workers/issue')
 
-module.exports = new Resource('issues', {
+var issues = new Resource('issues', {
   new: function *() {
     yield this.render('issues/new')
   },
@@ -24,3 +24,5 @@ module.exports = new Resource('issues', {
     yield this.render('issues/show', {issue: issue})
   }
 })
+
+module.exports = issues
