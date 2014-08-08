@@ -1,17 +1,10 @@
-var Waterline = require('waterline')
+var mongoose = require('mongoose')
 
-var Issue = Waterline.Collection.extend({
+module.exports = function () {
+  var issueSchema = new mongoose.Schema({
+    path: String,
+    number: Number
+  })
 
-  identity: 'issue',
-  connection: 'postgresql',
-
-  attributes: {
-    filename: 'string',
-    pages: {
-      collection: 'page',
-      via: 'issue'
-    }
-  }
-})
-
-module.exports = Issue
+  mongoose.model('Issue', issueSchema)
+}

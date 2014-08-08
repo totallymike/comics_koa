@@ -1,37 +1,15 @@
-var Waterline = require('waterline')
-  , postgresql = require('sails-postgresql')
-  , _ = require('lodash')
+var mongoose = require('mongoose')
+  , debug = require('debug')('comics:db')
 
-var orm = new Waterline()
-  , models = require('../app/models')
+var db = mongoose.connection
+db.on('error', debug.bind(debug, 'error: %s'))
 
-var config = {
-  adapters: {
-    postgresql: postgresql
-  },
-  connections: {
-    postgresql: {
-      adapter: 'postgresql',
-      url: process.env.DATABASE_URL
-    }
-  }
-}
-
-_.forOwn(models, function (num, model) {
-  orm.loadCollection(models[model])
+db.once('open', function dbCallback() {
+  debug('Connection opened')
 })
 
-var initDb = function () {
-  return function(callback) {
-    orm.initialize(config, function (err, ontology) {
-      if (err) {
-        throw err
-      }
-      orm.models = ontology.collections
-      callback(null, ontology)
-    })
-  }
-}
+require('../app/models')
 
-module.exports = orm
-module.exports.initDb = initDb
+mongoose.connect(process.env.DATABASE_URL || 'mongodb://localhost/comics')
+
+module.exports = mongoose

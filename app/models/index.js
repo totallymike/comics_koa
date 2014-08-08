@@ -16,5 +16,5 @@ _.chain(files)
  .filter(notIndex)
  .map(stripExtension)
  .forEach(function (file) {
-   exports[file] = require(path.join(__dirname, file))
+   require(path.join(__dirname, file))()
  })

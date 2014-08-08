@@ -6,9 +6,9 @@ var debug = require('debug')('comics:issue-processor')
 function IssueProcessor(file, done) {
   'use strict';
   var path = require('path')
-    , db = require('../../config/db')
-    , Issue = db.models.issue
-    , Page = db.models.page
+    , mongoose = require('mongoose')
+    , Issue = mongoose.model('Issue')
+    , Page = mongoose.model('Page')
 
   var issuePath = path.join(process.env.DATA_DIR, file.name)
 
@@ -25,18 +25,18 @@ function IssueProcessor(file, done) {
     unzipper.on('extract', function () {
       debug('succeeded in extraction')
       co(function* () {
-        var issue = yield coCreate(Issue, {filename: file.name})
+        var issue = yield Issue.create({number: file.number, path: file.name})
 
         var files = yield unglob.directory(
           ['**/*.png', '**/*.jpg', '**/*.jpeg'],
           issuePath
         )
 
-        var pageCreators = _.map(files.sort(), function (file, pageNumber) {
-          return coCreate(Page, {
-            filename: file,
-            pageNumber: pageNumber,
-            issue: issue.id
+        var pageCreators = _.map(files.sort(), function (filePath, pageNumber) {
+          Page.create({
+            filePath: filePath,
+            number: pageNumber,
+            issue: issue._id
           })
         })
 
@@ -52,9 +52,3 @@ function IssueProcessor(file, done) {
 }
 
 module.exports = IssueProcessor
-
-function coCreate(model, attributes) {
-  return function (cb) {
-    model.create(attributes).exec(cb)
-  }
-}

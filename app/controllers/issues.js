@@ -11,17 +11,33 @@ var issues = new Resource('issues', {
       multipart: true
     }),
     function *(next) {
-      issueQueue.add({file: this.request.body.files.filename})
+      var issueQueue = require('../workers/issue')
+      var uploadedFile = this.request.body.files.filename
+        , fields = this.request.body.fields
+      var file = {
+        name: uploadedFile.name,
+        path: uploadedFile.path,
+        number: fields.number
+      }
+
+      issueQueue.add({file: file})
       this.redirect('/')
       yield next
     }
   ],
   show: function *() {
-    var Issue = this.models.issue
-    var issue = yield Issue.findOne()
-                           .where({id: this.params.issue})
-                           .populate('pages', {sort: 'pageNumber ASC'})
-    yield this.render('issues/show', {issue: issue})
+    var mongoose = require('mongoose')
+      , Page = mongoose.model('Page')
+
+    var pages = yield Page.find({issue: this.params.issue}).lean()
+                          .select('number')
+                          .sort('number')
+                          .exec()
+
+    yield this.render('issues/show', {
+      issue: this.params.issue,
+      pages: pages
+    })
   }
 })
 

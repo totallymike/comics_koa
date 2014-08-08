@@ -1,16 +1,18 @@
-var Waterline = require('waterline')
+var mongoose = require('mongoose')
+  , Schema = mongoose.Schema
 
-var Page = Waterline.Collection.extend({
-  identity: 'page',
-  connection: 'postgresql',
+module.exports = function () {
+  var pageSchema = new mongoose.Schema({
+    number: Number,
+    filePath: String,
+    issue: { type: Schema.Types.ObjectId, ref: 'Issue' }
+  })
 
-  attributes: {
-    filename: 'string',
-    pageNumber: 'integer',
-    issue: {
-      model: 'issue'
-    }
+  pageSchema.methods.nextPage = function () {
+    return this.model('Page').findOne()
+               .where({issue: this.issue})
+               .where({number: this.number + 1})
   }
-})
 
-module.exports = Page
+  mongoose.model('Page', pageSchema)
+}

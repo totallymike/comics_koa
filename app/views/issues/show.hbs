@@ -1,7 +1,7 @@
 <ul class="list-group">
-  {{#each issue.pages}}
+  {{#each pages}}
     <li class="list-group-item">
-      <a href="/issues/{{../issue.id}}/pages/{{ pageNumber }}">{{pageNumber}}</a>
+      <a href="/issues/{{../issue}}/pages/{{ number }}">{{ number }}</a>
     </li>
   {{/each}}
 </ul>
