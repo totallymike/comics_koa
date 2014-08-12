@@ -41,6 +41,15 @@ function IssueProcessor(file, done) {
         })
 
         var pages = yield pageCreators
+
+        require('fs').unlink(file.path, function (err) {
+          if (err) {
+            debug(err)
+          } else {
+            debug('%s deleted.', file.path)
+          }
+        })
+
         return [null, [issue, pages]]
       })(done)
     })
