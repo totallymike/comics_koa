@@ -1,6 +1,6 @@
 var Resource = require('koa-resource-router')
   , koaBody = require('koa-better-body')
-  , issueQueue = require('../workers/issue')
+
 
 var issues = new Resource('issues', {
   new: function *() {
