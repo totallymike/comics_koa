@@ -10,6 +10,7 @@ function IssueProcessor(file, done) {
     , Issue = mongoose.model('Issue')
     , Page = mongoose.model('Page')
 
+  debug(require('util').inspect(file))
   var issuePath = path.join(process.env.DATA_DIR, file.name)
 
   if (file.name.match(/cbz$/i)) {

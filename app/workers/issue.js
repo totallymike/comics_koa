@@ -4,9 +4,20 @@ var Queue = require('bull')
 
 var queueHost = process.env.QUEUE_HOST
   , queuePort = process.env.QUEUE_PORT
+  , queuePassword = process.env.QUEUE_PASSWORD
+
+var queueOptions = {}
+if (queuePassword) {
+  queueOptions.auth_pass = queuePassword
+}
 
 var issueQueue
-module.exports = issueQueue = Queue('issue extracting', queuePort, queueHost)
+module.exports = issueQueue = Queue(
+  'issue extracting',
+  queuePort,
+  queueHost,
+  queueOptions
+)
 
 issueQueue.process(function (job, done) {
   var IssueProcessor = require('../services/issue_processor')

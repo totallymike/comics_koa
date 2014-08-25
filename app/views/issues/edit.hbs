@@ -1,0 +1,27 @@
+<form role="form"
+  class="form-horizontal"
+  method="POST"
+  action="/issues/{{issue._id}}">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-2">
+      <h2>Edit Issue</h2>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-md-2 control-label" for="number">Issue Number</label>
+    <div class="col-md-10">
+      <input type="number" name="number" value="{{issue.number}}">
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-md-2 control-label" for="remarks">Remarks</label>
+    <div class="col-md-10">
+      <input type="textarea" name="remarks" value="{{issue.remarks}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+      <input type="Submit" value="Submit" class="btn btn-default">
+    </div>
+  </div>
+</form>

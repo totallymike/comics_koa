@@ -17,12 +17,14 @@
     "koa": "^0.8.1",
     "koa-better-body": "^1.0.3",
     "koa-common": "^1.2.0",
+    "koa-cors": "0.0.13",
     "koa-hbs": "^0.4.6",
     "koa-resource-router": "^0.3.3",
     "koa-router": "^3.2.1",
     "koa-send": "^1.2.4",
     "lodash": "^2.4.1",
     "mongoose": "^3.8.14",
+    "qs": "^1.2.2",
     "unglob": "^0.1.2"
   },
   "devDependencies": {

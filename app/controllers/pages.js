@@ -1,22 +1,26 @@
-var Resource = require('koa-resource-router')
+var debug = require('debug')('comics:controller:pages')
+  , qs = require('qs')
 
-var pages = new Resource('pages', {
-  show: function *(next) {
-    var Page = require('mongoose').model('Page')
-    var page = yield Page.findOne()
-                         .where({issue: this.params.issue})
-                         .where({number: this.params.page})
-                         .populate('issue')
-                         .exec()
-    var nextPage = yield page.nextPage().lean().select('number').exec()
+var pages = function *(next) {
+  var Page = require('mongoose').model('Page')
+  var query = qs.parse(this.querystring)
+  var page
+  if (query.ids) {
+    page = yield Page
+      .find()
+      .lean()
+      .where('_id')
+      .in(query.ids)
+      .populate('issue_id')
+      .exec()
+    this.body = { page: page }
+  } else {
+    page = yield Page.find()
+    .where(query)
+    .exec()
 
-    yield this.render('pages/show', {
-      page: page,
-      issue: page.issue,
-      nextPage: nextPage
-    })
-    yield next
+    this.body = {page: page}
   }
-})
-
+  yield next
+}
 module.exports = pages

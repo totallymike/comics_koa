@@ -4,11 +4,9 @@ var root = require('../app/controllers/root')
   , dynImg = require('../app/controllers/dyn_img')
   , mount = require('koa-common').mount
 
-issues.add(pages)
-
 module.exports = function (app) {
   app.use(root.middleware())
   app.use(issues.middleware())
-  app.use(pages.middleware())
+  app.use(mount('/pages', pages))
   app.use(mount('/dynImg', dynImg))
 }
